@@ -22,7 +22,7 @@ soul-do-like:
       name: pull用户界面布局文件、通过ui布局文件识别点赞按坐标（数组）
       status: running
       type: searchTargetNode
-      ui-save-path: E:/adb/uidump.xml
+      ui-save-path: ${config.common.ui-save-path}
       xpath: //node[@resource-id='cn.soulapp.android:id/iv_like']
       current-activity: ${config.soul.activity.main-activity.name}
       target-activity: ${config.soul.activity.main-activity.name}

@@ -38,7 +38,7 @@ soul-star-match:
       name: 点击文本框获取输入焦点
       status: running
       type: clickTargetNode
-      ui-save-path: E:/adb/uidump.xml
+      ui-save-path: ${config.common.ui-save-path}
       xpath: //node[@resource-id='cn.soulapp.android:id/et_sendmessage']
       current-activity: ${config.soul.activity.chat-window-activity.name}
       target-activity: ${config.soul.activity.chat-window-activity.name}
@@ -54,7 +54,7 @@ soul-star-match:
       name: 模拟点击发送按钮
       status: running
       type: clickTargetNode
-      ui-save-path: E:/adb/uidump.xml
+      ui-save-path: ${config.common.ui-save-path}
       xpath: //node[@resource-id='cn.soulapp.android:id/btn_send']
       current-activity: ${config.soul.activity.chat-window-activity.name}
       target-activity: ${config.soul.activity.chat-window-activity.name}

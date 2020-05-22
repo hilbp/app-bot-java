@@ -28,7 +28,7 @@ soul-comment:
       name: pull用户界面布局文件、通过ui布局文件获取瞬间列表条目的坐标（数组）
       status: running
       type: searchTargetNode
-      ui-save-path: E:/adb/uidump.xml
+      ui-save-path: ${config.common.ui-save-path}
       xpath: //node[@resource-id='cn.soulapp.android:id/square_item_comment']
       current-activity: ${config.soul.activity.main-activity.name}
       target-activity: ${config.soul.activity.main-activity.name}
@@ -46,7 +46,7 @@ soul-comment:
           status: running
           type: searchTargetNode
           not-get-new-ui: true
-          ui-save-path: E:/adb/uidump.xml
+          ui-save-path: ${config.common.ui-save-path}
           xpath: //node[@resource-id='cn.soulapp.android:id/square_item_text']
           current-activity: ${config.soul.activity.post-detail-activity.name}
           target-activity: ${config.soul.activity.post-detail-activity.name}

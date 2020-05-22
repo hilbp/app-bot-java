@@ -21,7 +21,7 @@ doyin-comment-dolike:
       name: 点击评论按钮
       status: running
       type: clickTargetNode
-      ui-save-path: E:/adb/uidump.xml
+      ui-save-path: ${config.common.ui-save-path}
       xpath: //node[@resource-id='com.ss.android.ugc.aweme:id/a_w']
       current-activity: ${config.doyin.activity.main-activity.name}
 
@@ -29,7 +29,7 @@ doyin-comment-dolike:
       name: 查找点赞按钮
       status: running
       type: searchTargetNode
-      ui-save-path: E:/adb/uidump.xml
+      ui-save-path: ${config.common.ui-save-path}
       xpath: //node[@resource-id='com.ss.android.ugc.aweme:id/chx']
       current-activity: ${config.doyin.activity.main-activity.name}
       action-state-name: boundsToCoordActionState

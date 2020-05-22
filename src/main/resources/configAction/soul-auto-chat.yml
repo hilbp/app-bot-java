@@ -28,7 +28,7 @@ soul-auto-chat:
       name: 监听消息列表查询未读消息标识
       status: running
       type: searchTargetNode
-      ui-save-path: E:/adb/uidump.xml
+      ui-save-path: ${config.common.ui-save-path}
       xpath: //node[@resource-id='cn.soulapp.android:id/unread_msg_number']
       current-activity: ${config.soul.activity.main-activity.name}
       target-activity: ${config.soul.activity.main-activity.name}
@@ -45,7 +45,7 @@ soul-auto-chat:
           name: 获取对方最后一条聊天内容
           status: running
           type: searchTargetNode
-          ui-save-path: E:/adb/uidump.xml
+          ui-save-path: ${config.common.ui-save-path}
           xpath: //node[@resource-id='cn.soulapp.android:id/content_text']
           current-activity: ${config.soul.activity.chat-window-activity.name}
           target-activity: ${config.soul.activity.chat-window-activity.name}
@@ -56,7 +56,7 @@ soul-auto-chat:
           status: running
           type: clickTargetNode
           not-get-new-ui: true
-          ui-save-path: E:/adb/uidump.xml
+          ui-save-path: ${config.common.ui-save-path}
           xpath: //node[@resource-id='cn.soulapp.android:id/et_sendmessage']
           current-activity: ${config.soul.activity.chat-window-activity.name}
           target-activity: ${config.soul.activity.chat-window-activity.name}
@@ -72,7 +72,7 @@ soul-auto-chat:
           name: 查询发送按钮坐标并响应消息
           status: running
           type: clickTargetNode
-          ui-save-path: E:/adb/uidump.xml
+          ui-save-path: ${config.common.ui-save-path}
           xpath: //node[@resource-id='cn.soulapp.android:id/btn_send']
           current-activity: ${config.soul.activity.chat-window-activity.name}
           target-activity: ${config.soul.activity.chat-window-activity.name}
