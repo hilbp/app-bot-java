@@ -1,0 +1,127 @@
+package com.hilbp.adb.action;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
+
+import com.hilbp.adb.action.base.ActionState;
+import com.hilbp.adb.action.base.ActionType;
+import com.hilbp.adb.entity.Action;
+import com.hilbp.adb.entity.Coord;
+import com.hilbp.adb.util.StaticValue;
+import com.hilbp.adb.util.StringUtil;
+
+import lombok.extern.slf4j.Slf4j;
+import se.vidstige.jadb.JadbDevice;
+
+@Slf4j
+@Component
+public class ReflectActionSchedule implements ActionSchedule {
+	
+	@Autowired
+	private ApplicationContext applicationContext;	
+
+	@SuppressWarnings("finally")
+	@Override
+	public void run(JadbDevice device, List<Action> actions) {
+		
+		while(true) {
+			try {
+				this.runInitAction(device, actions);
+				this.runRunningAction(device, actions);
+			} 
+			catch(IllegalArgumentException e) {
+				log.info("异常：{}", e.getMessage());
+				this.runExceptionAction(device, actions);
+			} 
+			finally {
+				continue;
+			}
+		}
+	}
+	
+	//执行status=init状态的action（只执行一次）
+	public void runInitAction(JadbDevice device, List<Action> actions) {
+		
+		List<Action> initActions = this.filterAction(actions, StaticValue.STATUS_INIT);
+		if(initActions == null || initActions.isEmpty()) 
+			return;
+		
+		for(Action action : initActions) {
+			this.invoke(device, action);
+		}
+	}
+	
+	//执行status=running状态的action(循环执行)
+	public void runRunningAction(JadbDevice device, List<Action> actions) {
+		
+		List<Action> runningActions = this.filterAction(actions, StaticValue.STATUS_RUNNING);
+		if(runningActions == null || runningActions.isEmpty()) 
+			return;
+		
+		while(true) {
+			for(Action action : runningActions) {
+				
+				//执行父action
+				this.invoke(device, action);
+				//执行子action
+				this.runChildAction(device, action, action.getChildActions());
+			}
+		}
+	}
+	
+	//出现异常时执行
+	public void runExceptionAction(JadbDevice device, List<Action> actions) {
+		List<Action> exceptionActions = this.filterAction(actions, StaticValue.STATUS_EXCEPTION);
+		if(exceptionActions == null || exceptionActions.isEmpty())
+			return;
+		for(Action action : exceptionActions) {
+			this.invoke(device, action);
+		}
+	}
+	
+	//执行子action
+	public void runChildAction(JadbDevice device, Action action, List<Action> childActions) {
+		
+		if(childActions == null) return;
+		String actionStateName = action.getActionStateName();
+		if(StringUtil.isEmpty(actionStateName)) return;
+		ActionState actionState = (ActionState) applicationContext.getBean(actionStateName);
+
+		if(action.getType().equals(StaticValue.TYPE_SEARCH_TARGET_NODE)) {
+
+			List<Coord> coords = actionState.getCoords();
+			for(Coord coord : coords) {
+				for(Action childAction : childActions) {
+					childAction.setParentTochildLocation(coord);
+					this.invoke(device, childAction);
+				}
+			}
+		}
+		
+	}
+	
+	//执行操作
+	public void invoke(JadbDevice device, Action action) {
+		log.info("current action: {}", action.getName());
+		ActionType type = (ActionType) applicationContext.getBean(action.getType());
+		type.operate(device, action);
+	}
+		
+	//过滤action
+	public List<Action> filterAction(List<Action> actions, String condition) {
+		
+		List<Action> temp = new ArrayList<Action>();
+		for(Action action : actions) {
+			if(!condition.equals(action.getStatus())) 
+				continue;
+			temp.add(action);
+		}
+		
+		return temp;
+	}
+	
+}

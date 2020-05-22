@@ -1,0 +1,93 @@
+doyin-comment-dolike: 
+  name: doyin-comment-dolike
+  desc: 抖音对视频的评论进行点赞
+  actions:
+    - order: 1
+      name: 打开应用【抖音】
+      status: init
+      type: open
+      target-activity: ${config.doyin.activity.main-activity.name}
+
+    - order: 2
+      name: 暂停视频
+      status: running
+      type: click
+      location: 
+        x: ${config.common.sreen-center.location.x}
+        y: ${config.common.sreen-center.location.y}
+      current-activity: ${config.doyin.activity.main-activity.name}
+      
+    - order: 3
+      name: 点击评论按钮
+      status: running
+      type: clickTargetNode
+      ui-save-path: E:/adb/uidump.xml
+      xpath: //node[@resource-id='com.ss.android.ugc.aweme:id/a_w']
+      current-activity: ${config.doyin.activity.main-activity.name}
+
+    - order: 4
+      name: 查找点赞按钮
+      status: running
+      type: searchTargetNode
+      ui-save-path: E:/adb/uidump.xml
+      xpath: //node[@resource-id='com.ss.android.ugc.aweme:id/chx']
+      current-activity: ${config.doyin.activity.main-activity.name}
+      action-state-name: boundsToCoordActionState
+      child-actions:  
+        - order: 1
+          name: 进行点赞
+          status: running
+          type: click
+          target-activity: ${config.doyin.activity.main-activity.name}   
+            
+        - order: 4
+          name: 下一页
+          status: running
+          type: swipe
+          direction: up
+          location: 
+            x: ${config.common.sreen-center.location.x}
+            y: ${config.common.sreen-center.location.y}
+          offset:
+            x: 100 
+            y: 600
+            
+    - order: 5
+      name: 下一页
+      status: running
+      type: swipe
+      direction: up
+      location: 
+        x: ${config.common.sreen-center.location.x}
+        y: ${config.common.sreen-center.location.y}
+      offset:
+        x: 100 
+        y: 600
+        
+    - order: 6
+      name: 出现异常时页面回退到屏幕主页
+      status: exception
+      type: back
+      target-activity: ${config.common.home-activity.name}
+      
+     
+      
+      
+      
+      
+      
+    
+      
+      
+
+    
+      
+    
+    
+   
+    
+    
+    
+
+    
+    
