@@ -9,10 +9,8 @@ import com.hilbp.adb.action.ActionSchedule;
 import com.hilbp.adb.util.AdbShellUtil;
 import com.hilbp.adb.yml.SoulDoLike;
 
-import lombok.extern.slf4j.Slf4j;
-
 @ControllerAdvice
-@Slf4j
+//@Slf4j
 public class MyExceptionController {
 	
 	@Autowired
