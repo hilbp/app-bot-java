@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
 import com.hilbp.adb.entity.Coord;
-import com.hilbp.adb.entity.Result;
+import com.hilbp.adb.entity.ActionResult;
 import com.hilbp.adb.state.ActionState;
 import com.hilbp.adb.util.StaticValue;
 import com.hilbp.adb.util.StringUtil;
@@ -156,7 +156,7 @@ public class ReflectActionSchedule implements ActionSchedule {
 	//执行操作(有返回值)
 	public boolean invoke(JadbDevice device, Action action, boolean bool) {
 		log.info("current action: {}", action.getName());
-		Result result = new Result();
+		ActionResult result = new ActionResult();
 		ActionType type = (ActionType) applicationContext.getBean(action.getType());
 		type.operate(device, action, result);
 		return result.isSuccessed();

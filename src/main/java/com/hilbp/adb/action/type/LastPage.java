@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
 import com.hilbp.adb.entity.Node;
-import com.hilbp.adb.entity.Result;
+import com.hilbp.adb.entity.ActionResult;
 import com.hilbp.adb.state.ActionState;
 import com.hilbp.adb.util.UiAutoMatorUtil;
 
@@ -22,7 +22,7 @@ public class LastPage extends ActionType {
 	public void operate(JadbDevice device, Action action) {}
 	
 	@Override
-	public void operate(JadbDevice device, Action action, Result resutl) {
+	public void operate(JadbDevice device, Action action, ActionResult resutl) {
 		resutl.setAction(action);
 		boolean flag = this.run(device, action);
 		resutl.setSuccessed(flag);

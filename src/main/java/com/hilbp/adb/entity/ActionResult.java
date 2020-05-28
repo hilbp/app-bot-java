@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Result {
+public class ActionResult {
 	
 	private Action action; //被执行的action信息
 	private boolean isSuccessed; //action是否执行成功

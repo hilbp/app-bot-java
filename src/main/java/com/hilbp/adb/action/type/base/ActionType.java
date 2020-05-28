@@ -8,7 +8,7 @@ import org.springframework.util.Assert;
 
 import com.hilbp.adb.entity.Action;
 import com.hilbp.adb.entity.Coord;
-import com.hilbp.adb.entity.Result;
+import com.hilbp.adb.entity.ActionResult;
 import com.hilbp.adb.state.ActionState;
 import com.hilbp.adb.util.AdbShellUtil;
 import com.hilbp.adb.util.StringUtil;
@@ -27,7 +27,7 @@ public abstract class ActionType implements Type {
 	protected AdbShellUtil adbShellUtil;
 	
 	public abstract void operate(JadbDevice device, Action action);
-	public abstract void operate(JadbDevice device, Action action, Result resutl);
+	public abstract void operate(JadbDevice device, Action action, ActionResult resutl);
 	
 	//命令之前判断是否满足执行条件
 	public void beforExecuteShell(JadbDevice device, Action action) {
