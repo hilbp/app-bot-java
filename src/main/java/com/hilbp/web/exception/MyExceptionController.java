@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.hilbp.adb.action.ActionSchedule;
 import com.hilbp.adb.util.AdbShellUtil;
-import com.hilbp.adb.yml.SoulDoLike;
 
 @ControllerAdvice
 //@Slf4j
@@ -15,9 +14,6 @@ public class MyExceptionController {
 	
 	@Autowired
 	AdbShellUtil adbShellUtil;
-	
-	@Autowired
-	SoulDoLike soulDoLikeAction;
 	
 	@Autowired
 	@Qualifier("reflectActionSchedule")

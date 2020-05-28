@@ -18,8 +18,8 @@ public class YamlPropertySourceFactory implements PropertySourceFactory {
     	
         Properties propertiesFromYaml = loadYamlIntoProperties(resource);
         String sourceName = name != null ? name : resource.getResource().getFilename();
-        
-        return new PropertiesPropertySource(sourceName, propertiesFromYaml);
+        PropertiesPropertySource propertiesPropertySource = new PropertiesPropertySource(sourceName, propertiesFromYaml);
+        return propertiesPropertySource;
     }
 
     private Properties loadYamlIntoProperties(EncodedResource resource) throws FileNotFoundException {

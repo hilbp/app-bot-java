@@ -1,5 +1,5 @@
-doyin-comment-dolike: 
-  name: doyin-comment-dolike
+doyin-video-comment: 
+  name: doyin-video-comment
   desc: 抖音对视频的评论进行点赞
   actions:
     - order: 1

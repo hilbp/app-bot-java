@@ -3,9 +3,7 @@ package com.hilbp.web.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -22,24 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hilbp.adb.action.ActionSchedule;
 import com.hilbp.adb.client.TencentAiService;
-import com.hilbp.adb.entity.Action;
 import com.hilbp.adb.entity.Node;
 import com.hilbp.adb.util.AdbShellUtil;
-import com.hilbp.adb.util.TencentApiUtil;
-import com.hilbp.adb.yml.DoyinCommentDolike;
-import com.hilbp.adb.yml.SoulAutoChat;
-import com.hilbp.adb.yml.SoulComment;
-import com.hilbp.adb.yml.SoulDoLike;
-import com.hilbp.adb.yml.SoulStarMatch;
 
 import cn.xsshome.taip.nlp.TAipNlp;
-import lombok.extern.slf4j.Slf4j;
 import se.vidstige.jadb.JadbDevice;
 import se.vidstige.jadb.JadbException;
 
 @RestController
 @RequestMapping("/adb")
-@Slf4j
 public class AdbTestController {
 	
 	@Autowired
@@ -48,20 +37,7 @@ public class AdbTestController {
 	@Autowired
 	TAipNlp tAipNlp;
 	
-	@Autowired
-	SoulDoLike soulDoLikeAction;
 	
-	@Autowired
-	SoulComment soulComment;
-	
-	@Autowired
-	SoulStarMatch soulStarMatch;
-	
-	@Autowired
-	SoulAutoChat soulAutoChat;
-	
-	@Autowired
-	DoyinCommentDolike doyinCommentDolike;
 	
 	
 	@Autowired
@@ -71,79 +47,9 @@ public class AdbTestController {
 	@Autowired
     public TencentAiService feignClientService;
 	
-	//测试xml
-	@RequestMapping("/index")
-	public ResponseEntity<Object> index() {
-		
-		List<Action> actions = soulDoLikeAction.getActions();
-		List<JadbDevice> devices = adbShellUtil.getDevices();
-		reflectActionSchedule.run(devices.get(0), actions);
-		
-		return null;
-	}
-	
-	@RequestMapping("/comment")
-	public ResponseEntity<Object> comment() {
-		
-		List<Action> actions = soulComment.getActions();
-		List<JadbDevice> devices = adbShellUtil.getDevices();
-		reflectActionSchedule.run(devices.get(0), actions);
-		
-		return null;
-	}
-	
-	@RequestMapping("/match")
-	public ResponseEntity<Object> match() {
-		
-		List<Action> actions = soulStarMatch.getActions();
-		List<JadbDevice> devices = adbShellUtil.getDevices();
-		reflectActionSchedule.run(devices.get(0), actions);
-		
-		return null;
-	}
-	
-	@RequestMapping("/doyin/dolike")
-	public ResponseEntity<Object> dolike() {
-		
-		List<Action> actions = doyinCommentDolike.getActions();
-		List<JadbDevice> devices = adbShellUtil.getDevices();
-		reflectActionSchedule.run(devices.get(0), actions);
-		
-		return null;
-	}
-	
-	@RequestMapping("/chat")
-	public ResponseEntity<Object> chat() {
-		
-		List<Action> actions = soulAutoChat.getActions();
-		List<JadbDevice> devices = adbShellUtil.getDevices();
-		reflectActionSchedule.run(devices.get(0), actions);
-		
-		return null;
-	}
 	
 	
-	
-	@RequestMapping("/api")
-	public ResponseEntity<Object> api() throws IOException {
-		
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("app_id", "2119891201");
-		params.put("time_stamp", System.currentTimeMillis());
-		params.put("nonce_str", "nonceStr");
-		params.put("session", 1);
-		params.put("question", "你好");
-		params.put("sign", TencentApiUtil.getSignature(params));
 
-		String test = feignClientService.tencentChatBot(2119891201,
-				System.currentTimeMillis() / 1000,
-				"nonceStr",
-				TencentApiUtil.getSignature(params), "100", "你好");
-		log.info(test);
-		
-		return null;
-	}
-	
 	@RequestMapping("/api1")
 	public ResponseEntity<Object> api1() throws Exception {
 		
