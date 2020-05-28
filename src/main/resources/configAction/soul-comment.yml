@@ -27,7 +27,7 @@ soul-comment:
     - order: 4
       name: pull用户界面布局文件、通过ui布局文件获取瞬间列表条目的坐标（数组）
       status: running
-      type: searchTargetNode
+      type: saveTargetNode
       ui-save-path: ${config.common.ui-save-path}
       xpath: //node[@resource-id='cn.soulapp.android:id/square_item_comment']
       current-activity: ${config.soul.activity.main-activity.name}
@@ -44,8 +44,8 @@ soul-comment:
         - order: 2
           name: pull用户界面布局文件、提取node中的text信息并保存在状态中
           status: running
-          type: searchTargetNode
-          not-get-new-ui: true
+          type: saveTargetNode
+          is-not-get-new-ui: true
           ui-save-path: ${config.common.ui-save-path}
           xpath: //node[@resource-id='cn.soulapp.android:id/square_item_text']
           current-activity: ${config.soul.activity.post-detail-activity.name}
@@ -55,7 +55,7 @@ soul-comment:
         - order: 3
           name: 文字语义识别并填充评论框
           status: running
-          type: sendMessageToInput
+          type: setTextToInput
           action-state-name: saveTextActionState
           current-activity: ${config.soul.activity.post-detail-activity.name}
           target-activity: ${config.soul.activity.post-detail-activity.name}

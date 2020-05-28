@@ -2,4 +2,11 @@ spring:
   application:
     name: test
 # debug: true
+
+#配置日志
+logging:
+  file: log/test.log
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss} %logger{15} - %msg%n'
  

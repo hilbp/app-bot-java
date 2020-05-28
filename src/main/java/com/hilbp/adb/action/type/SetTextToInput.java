@@ -1,4 +1,4 @@
-package com.hilbp.adb.action.type.quote;
+package com.hilbp.adb.action.type;
 
 import java.util.List;
 
@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.hilbp.adb.action.base.ActionState;
-import com.hilbp.adb.action.base.QuoteActionType;
+import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
 import com.hilbp.adb.entity.Node;
 import com.hilbp.adb.entity.Result;
-import com.hilbp.adb.util.ChatApiUtil;
+import com.hilbp.adb.state.ActionState;
+import com.hilbp.adb.util.NlpUtil;
 import com.hilbp.adb.util.StringUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,34 +27,34 @@ import se.vidstige.jadb.JadbDevice;
 
 @Component
 @Slf4j
-public class QuoteSendMessageToInput extends QuoteActionType {
+public class SetTextToInput extends ActionType {
 	
 	@Autowired
 	ApplicationContext applicationContext;
 	
 	@Autowired
-	private ChatApiUtil apiUtil;
+	private NlpUtil nlpUtil;
 	
 	@Override
-	public void operate(JadbDevice device, Action action, Result result) {
-		result.setSuccessed(this.run(device, action));
+	public void operate(JadbDevice device, Action action) {
+		this.run(device, action);
 	}
 	
-	public boolean run(JadbDevice device, Action action) {
+	public void run(JadbDevice device, Action action) {
+				
+		this.beforExecuteShell(device, action);
+		String actionStateName = action.getActionStateName();
 		
-		boolean flag = false;
-		if(this.beforExecuteShell(device, action)) {
-			
-			String msg = null;
-			String actionStateName = action.getActionStateName();
-			if(StringUtil.isNotEmpty(actionStateName)) 
-				msg = this.getChatMsg(actionStateName);
-			else msg = "你好呀";
-			
-			adbShellUtil.sendMessage(device, msg, true);
-			flag = this.afterExecuteShell(device, action);
+		String msg = null;
+		if(StringUtil.isNotEmpty(actionStateName)) {
+			msg = this.getChatMsg(actionStateName);
+		}else {
+			msg = "你好啊，聊聊天嘛";
 		}
-		return flag;	
+		adbShellUtil.sendMessage(device, msg, true);
+		
+		this.afterExecuteShell(device, action);
+			
 	}
 	
 	//语义识别
@@ -66,12 +66,20 @@ public class QuoteSendMessageToInput extends QuoteActionType {
 		if(nodes.size() == 0) {
 			return "你在嘤嘤嘤什么呀！";
 		}
+		
 		String message = nodes.get(nodes.size() - 1).getText();
 		log.info("→   识别内容：{}", message);
-		String msg = apiUtil.getChatMsg(message);
+		
+		String msg = nlpUtil.getChatMsg(message);
 		log.info("→   聊天内容：{}", msg);
 		
 		return msg;
 	}
 
+	@Override
+	public void operate(JadbDevice device, Action action, Result resutl) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

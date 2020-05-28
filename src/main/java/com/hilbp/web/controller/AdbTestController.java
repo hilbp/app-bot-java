@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
 import com.hilbp.adb.action.ActionSchedule;
 import com.hilbp.adb.client.TencentAiService;
 import com.hilbp.adb.entity.Action;
@@ -68,12 +67,7 @@ public class AdbTestController {
 	@Autowired
 	@Qualifier("reflectActionSchedule")
 	ActionSchedule reflectActionSchedule;
-	
-	@Autowired
-	@Qualifier("simpleReflectActionSchedule")
-	ActionSchedule simpleReflectActionSchedule;
 
-	
 	@Autowired
     public TencentAiService feignClientService;
 	
@@ -128,16 +122,7 @@ public class AdbTestController {
 		return null;
 	}
 	
-	@RequestMapping("/index1")
-	public ResponseEntity<Object> index1() {
-		
-		List<Action> actions = soulDoLikeAction.getActions();
-		log.info("Actions: {}", JSON.toJSONString(actions));
-		List<JadbDevice> devices = adbShellUtil.getDevices();
-		simpleReflectActionSchedule.run(devices.get(0), actions);
-		
-		return null;
-	}
+	
 	
 	@RequestMapping("/api")
 	public ResponseEntity<Object> api() throws IOException {

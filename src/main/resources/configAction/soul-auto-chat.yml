@@ -27,7 +27,7 @@ soul-auto-chat:
     - order: 3
       name: 监听消息列表查询未读消息标识
       status: running
-      type: searchTargetNode
+      type: saveTargetNode
       ui-save-path: ${config.common.ui-save-path}
       xpath: //node[@resource-id='cn.soulapp.android:id/unread_msg_number']
       current-activity: ${config.soul.activity.main-activity.name}
@@ -44,7 +44,7 @@ soul-auto-chat:
         - order: 2
           name: 获取对方最后一条聊天内容
           status: running
-          type: searchTargetNode
+          type: saveTargetNode
           ui-save-path: ${config.common.ui-save-path}
           xpath: //node[@resource-id='cn.soulapp.android:id/content_text']
           current-activity: ${config.soul.activity.chat-window-activity.name}
@@ -55,7 +55,7 @@ soul-auto-chat:
           name: 获取文本框输入焦点唤起输入法
           status: running
           type: clickTargetNode
-          not-get-new-ui: true
+          is-not-get-new-ui: true
           ui-save-path: ${config.common.ui-save-path}
           xpath: //node[@resource-id='cn.soulapp.android:id/et_sendmessage']
           current-activity: ${config.soul.activity.chat-window-activity.name}
@@ -64,7 +64,7 @@ soul-auto-chat:
         - order: 4
           name: 对聊天内容进行语义识别并填充聊天输入文本框
           status: running
-          type: sendMessageToInput
+          type: setTextToInput
           action-state-name: saveTextActionState
           current-activity: ${config.soul.activity.chat-window-activity.name}
           

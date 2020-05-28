@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.hilbp.adb.action.base.ActionType;
+import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
 import com.hilbp.adb.entity.Coord;
+import com.hilbp.adb.entity.Result;
 import com.hilbp.adb.util.UiAutoMatorUtil;
 
 import se.vidstige.jadb.JadbDevice;
@@ -26,7 +27,7 @@ public class ClickTargetNode extends ActionType {
 	public void run(JadbDevice device, Action action) {
 		
 		//获取ui文件
-		if(action.getNotGetNewUi() == null || !action.getNotGetNewUi()) {
+		if(action.getIsNotGetNewUi() == null || !action.getIsNotGetNewUi()) {
 			this.beforExecuteShell(device, action);
 			adbShellUtil.saveUiFile(device, action.getUiSavePath());
 			this.afterExecuteShell(device, action);
@@ -38,24 +39,8 @@ public class ClickTargetNode extends ActionType {
 		this.click(device, action, coords);
 	}
 	
-	//点击操作
-	public void click(JadbDevice device, Action action, List<Coord> coords) {
-		
-		if(coords == null || coords.isEmpty()) 
-			return;
-		
-		for(Coord coord : coords) {
-			try {
-				 
-				this.beforExecuteShell(device, action);
-				adbShellUtil.click(device, coord.getX(), coord.getY());
-				Thread.sleep(1000);
-				this.afterExecuteShell(device, action);
-				
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+	
+	@Override
+	public void operate(JadbDevice device, Action action, Result resutl) {}
 
 }

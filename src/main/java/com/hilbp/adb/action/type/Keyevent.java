@@ -2,8 +2,9 @@ package com.hilbp.adb.action.type;
 
 import org.springframework.stereotype.Component;
 
-import com.hilbp.adb.action.base.ActionType;
+import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
+import com.hilbp.adb.entity.Result;
 
 import se.vidstige.jadb.JadbDevice;
 
@@ -21,5 +22,11 @@ public class Keyevent extends ActionType {
 //		adbShellUtil.exeShell(device, shell)
 		this.afterExecuteShell(device, action);
 			
+	}
+
+	@Override
+	public void operate(JadbDevice device, Action action, Result resutl) {
+		// TODO Auto-generated method stub
+		
 	}
 }

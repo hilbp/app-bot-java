@@ -26,15 +26,24 @@ doyin-comment-dolike:
         y: ${config.doyin.coord.comment-btn.location.y}
       current-activity: ${config.doyin.activity.main-activity.name}
       child-actions:  
+        - order: 1
+          name: 判断是否是最后一页
+          status: running
+          type: lastPage
+          ui-save-path: ${config.common.ui-save-path}
+          xpath: //node[@resource-id='com.ss.android.ugc.aweme:id/a2o']
+          current-activity: ${config.doyin.activity.main-activity.name}
+          action-state-name: lastPageActionState
+          
         - order: 2
           name: 查找点赞按钮进行点赞
           status: running
-          type: clickMatchNode
-          source-path: log/doyincommentlist.png
-          template-path: log/like1.png
+          type: clickTargetNode
+          is-not-get-new-ui: true
+          ui-save-path: ${config.common.ui-save-path}
+          xpath: //node[@resource-id='com.ss.android.ugc.aweme:id/chx']
           current-activity: ${config.doyin.activity.main-activity.name}
-          target-activity: ${config.doyin.activity.main-activity.name}
-          
+
         - order: 3
           name: 评论翻下一页
           status: running

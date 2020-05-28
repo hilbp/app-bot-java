@@ -36,8 +36,14 @@ public class Action {
 	
 	private Coord parentTochildLocation; //从父action传递给子action的坐标
 	
-	private Boolean notGetNewUi; //是否获取新的布局文件
+	private Boolean isNotGetNewUi; //是否获取新的布局文件
 	
 	private List<Action> childActions; //一个action包含的子action集合
+	
+	//when type=MatchTemplate
+	private String sourcePath; //原图
+	private String templatePath; //目标图
+	private float threshold; //阈值
+	
 	
 }

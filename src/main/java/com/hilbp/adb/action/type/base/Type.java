@@ -1,4 +1,4 @@
-package com.hilbp.adb.action.base;
+package com.hilbp.adb.action.type.base;
 
 import com.hilbp.adb.entity.Action;
 

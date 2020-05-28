@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.hilbp.adb.action.base.ActionState;
-import com.hilbp.adb.action.base.ActionType;
+import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
 import com.hilbp.adb.entity.Coord;
+import com.hilbp.adb.entity.Result;
+import com.hilbp.adb.state.ActionState;
 import com.hilbp.adb.util.StaticValue;
 import com.hilbp.adb.util.StringUtil;
 
@@ -64,11 +65,10 @@ public class ReflectActionSchedule implements ActionSchedule {
 		
 		while(true) {
 			for(Action action : runningActions) {
-				
 				//执行父action
 				this.invoke(device, action);
 				//执行子action
-				this.runChildAction(device, action, action.getChildActions());
+				this.runChildAction(device, action);
 			}
 		}
 	}
@@ -84,31 +84,19 @@ public class ReflectActionSchedule implements ActionSchedule {
 	}
 	
 	//执行子action
-	public void runChildAction(JadbDevice device, Action action, List<Action> childActions) {
+	public void runChildAction(JadbDevice device, Action action) {
 		
+		List<Action> childActions = action.getChildActions();
 		if(childActions == null) return;
-		String actionStateName = action.getActionStateName();
-		if(StringUtil.isEmpty(actionStateName)) return;
-		ActionState actionState = (ActionState) applicationContext.getBean(actionStateName);
-
-		if(action.getType().equals(StaticValue.TYPE_SEARCH_TARGET_NODE)) {
-
-			List<Coord> coords = actionState.getCoords();
-			for(Coord coord : coords) {
-				for(Action childAction : childActions) {
-					childAction.setParentTochildLocation(coord);
-					this.invoke(device, childAction);
-				}
-			}
+		
+		if(action.getType().equals(StaticValue.TYPE_SAVE_TARGET_NODE)) {
+			this.runChildActionOfParentTypeIsSaveTargetNode(device, action, childActions);
+		}
+		else if(action.getType().equals(StaticValue.TYPE_CLICK_TARGET_NODE) ||
+				action.getType().equals(StaticValue.TYPE_ClICK)) {
+			this.runChildActionOfParentTypeIsClickTargetNode(device, childActions);
 		}
 		
-	}
-	
-	//执行操作
-	public void invoke(JadbDevice device, Action action) {
-		log.info("current action: {}", action.getName());
-		ActionType type = (ActionType) applicationContext.getBean(action.getType());
-		type.operate(device, action);
 	}
 		
 	//过滤action
@@ -123,5 +111,56 @@ public class ReflectActionSchedule implements ActionSchedule {
 		
 		return temp;
 	}
+	
+	//父action的type=saveTargetNode的子action执行
+	public void runChildActionOfParentTypeIsSaveTargetNode(JadbDevice device, Action action, List<Action> childActions) {
+		
+		String actionStateName = action.getActionStateName();
+		if(StringUtil.isEmpty(actionStateName)) return;
+		ActionState actionState = (ActionState) applicationContext.getBean(actionStateName);
+		
+		List<Coord> coords = actionState.getCoordListFromNodes();
+		for(Coord coord : coords) {
+			for(Action childAction : childActions) {
+				childAction.setParentTochildLocation(coord);
+				this.invoke(device, childAction);
+			}
+		}
+	}
+	
+	//父action的type=clickTargetNode or type=click 的子action执行
+	public void runChildActionOfParentTypeIsClickTargetNode(JadbDevice device, List<Action> childActions) {
+		
+		int i = 3;
+		outLoop: while(i > 0) {
+			for(Action childAction : childActions) {
+				
+				if(childAction.getType().equals(StaticValue.TYPE_LAST_PAGE)) {
+					boolean isLastPage = this.invoke(device, childAction, true);
+					if(isLastPage) break outLoop;
+					continue;
+				}	
+				this.invoke(device, childAction);
+			}
+			i--;
+		}
+	}
+	
+	//执行操作
+	public void invoke(JadbDevice device, Action action) {
+		log.info("current action: {}", action.getName());
+		ActionType type = (ActionType) applicationContext.getBean(action.getType());
+		type.operate(device, action);
+	}
+	
+	//执行操作(有返回值)
+	public boolean invoke(JadbDevice device, Action action, boolean bool) {
+		log.info("current action: {}", action.getName());
+		Result result = new Result();
+		ActionType type = (ActionType) applicationContext.getBean(action.getType());
+		type.operate(device, action, result);
+		return result.isSuccessed();
+	}
+	
 	
 }

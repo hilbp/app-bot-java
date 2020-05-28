@@ -1,10 +1,12 @@
-package com.hilbp.adb.action.base;
+package com.hilbp.adb.state;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.hilbp.adb.entity.Action;
 import com.hilbp.adb.entity.Coord;
 import com.hilbp.adb.entity.Node;
+import com.hilbp.adb.util.UiAutoMatorUtil;
 
 public abstract class ActionState {
 	
@@ -21,8 +23,17 @@ public abstract class ActionState {
 		return this.nodes;
 	}
 	
-	public List<Coord> getCoords() {
+	public List<Coord> getCoordList() {
 		return this.coords;
+	}
+	
+	public List<Coord> getCoordListFromNodes() {
+		List<Coord> coords = new ArrayList<Coord>();
+		for(Node node : this.nodes) {
+			Coord coord = UiAutoMatorUtil.boundsToCoord(node.getBounds());
+			coords.add(coord);
+		}
+		return coords;
 	}
 	
 	public void setState(Action action, List<Node> nodes, List<Coord> coords) {
@@ -32,11 +43,9 @@ public abstract class ActionState {
 	}
 	
 	public void clear() {
-		
 		this.action = null;
-		this.coords = null;
 		this.nodes = null;
-
+		this.coords = null;
 	}
 	
 	public void setAction(Action action) {
@@ -51,5 +60,5 @@ public abstract class ActionState {
 	public void setCoords(List<Coord> coords) {
 		this.coords = coords;
 	}
-	 
+
 }

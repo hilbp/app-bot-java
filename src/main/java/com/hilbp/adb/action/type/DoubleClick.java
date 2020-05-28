@@ -3,9 +3,10 @@ package com.hilbp.adb.action.type;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import com.hilbp.adb.action.base.ActionType;
+import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
 import com.hilbp.adb.entity.Coord;
+import com.hilbp.adb.entity.Result;
 import com.hilbp.adb.util.StaticValue;
 
 import se.vidstige.jadb.JadbDevice;
@@ -33,6 +34,12 @@ public class DoubleClick extends ActionType {
 		adbShellUtil.doubleClick(device, coord.getX(), coord.getY());
 		this.afterExecuteShell(device, action);
 			
+	}
+
+	@Override
+	public void operate(JadbDevice device, Action action, Result resutl) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

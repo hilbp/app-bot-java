@@ -20,20 +20,27 @@ doyin-comment-dolike:
     - order: 3
       name: 点击评论按钮
       status: running
-      type: click
-      location: 
-        x: ${config.doyin.coord.comment-btn.location.x}
-        y: ${config.doyin.coord.comment-btn.location.y}
+      type: clickTargetNode
+      ui-save-path: ${config.common.ui-save-path}
+      xpath: //node[@resource-id='com.ss.android.ugc.aweme:id/a_w']
       current-activity: ${config.doyin.activity.main-activity.name}
       child-actions:  
-        - order: 2
+        - order: 1
           name: 查找点赞按钮进行点赞
           status: running
-          type: clickMatchNode
-          source-path: log/doyincommentlist.png
-          template-path: log/like1.png
+          type: clickTargetNode
+          ui-save-path: ${config.common.ui-save-path}
+          xpath: //node[@resource-id='com.ss.android.ugc.aweme:id/chx']
           current-activity: ${config.doyin.activity.main-activity.name}
-          target-activity: ${config.doyin.activity.main-activity.name}
+          
+        - order: 2
+          name: 判断是否是最后一页
+          status: running
+          type: lastPage
+          ui-save-path: ${config.common.ui-save-path}
+          xpath: //node[@resource-id='com.ss.android.ugc.aweme:id/a2o']
+          current-activity: ${config.doyin.activity.main-activity.name}
+          action-state-name: lastPageActionState
           
         - order: 3
           name: 评论翻下一页
@@ -55,12 +62,14 @@ doyin-comment-dolike:
       target-activity: ${config.doyin.activity.main-activity.name}
         
     - order: 5
-      name: 视频向上翻页
+      name: 向上翻页
       status: running
       type: swipe
       direction: up
+      current-activity: ${config.doyin.activity.main-activity.name}
+      target-activity: ${config.doyin.activity.main-activity.name}
       location: 
-        x: 800
+        x: ${config.common.sreen-center.location.x}
         y: ${config.common.sreen-center.location.y}
       offset:
         x: 100 

@@ -52,12 +52,19 @@ public class AdbShellUtil {
 	}
 	
 	//手机截屏并上传到电脑
-	public void getScreenshot(JadbDevice device) {
-		
+	public void getScreenshot(JadbDevice device, String savePath) {
 		try {
-			device.executeShell("screencap -p /sdcard/screen.png");
-			device.pull(new RemoteFile("/sdcard/screen.png"), new File("D:/screen.png"));
-		} catch (IOException | JadbException e) {
+			device.executeShell("screencap -p /data/local/tmp/screen.png");
+			Thread.sleep(3000);
+			RemoteFile remoteFile = new RemoteFile("/data/local/tmp/screen.png");
+			File file = new File(savePath);
+			device.pull(remoteFile, file);
+	        long oldLength;
+			do {
+				oldLength = file.length();
+				Thread.sleep(1000);
+			}while(oldLength != file.length());
+		} catch (IOException | JadbException | InterruptedException e) {
 			e.printStackTrace();
 		}
 		
@@ -134,11 +141,7 @@ public class AdbShellUtil {
 			if(msg.indexOf("UI hierchary dumped to:") > -1) 
 				return;
 			else if(msg.indexOf("ERROR: could not get idle state") > -1) {
-				//该页有动画内容注定失败，随机自动翻页
-				Coord start = new Coord(500, 800);
-				Coord end = new Coord(500, 300);
-				this.swipe(device, start, end, 100);
-//				Assert.isTrue(false, "could not get idle state");
+				Assert.isTrue(false, "could not get idle state");
 			}
 			
 			//防止息屏 224：点亮屏幕
@@ -173,7 +176,7 @@ public class AdbShellUtil {
 		
 		boolean flag = false;
 		String activity = getFocusedActivity(device);
-		if(activity.indexOf(targetActivity) > 0) {
+		if(activity.indexOf(targetActivity) > -1) {
 			flag = true;
 		}
 		return flag;

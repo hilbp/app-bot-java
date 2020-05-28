@@ -3,22 +3,27 @@ package com.hilbp.adb.util;
 public class StaticValue {
 	
 	// type
-	public final static String TYPE_OPEN = "open"; //打开app
-	public final static String TYPE_ClICK = "click"; //点击
-	public final static String TYPE_ClICK_BY_BOUNDS = "clickByBounds"; //点击通过bounds
-	public final static String TYPE_BOUNDS_TO_COORD = "boundsToCoord"; //通过bounds获取坐标集合
-	public final static String TYPE_SEARCH_TARGET_NODE = "searchTargetNode";
-	public final static String TYPE_SWIPE = "swipe"; //滑动
-	public final static String TYPE_BACK = "back"; //返回
-	public final static String TYPE_CUSTOM = "custom"; //自定义复杂操作
+	public final static String TYPE_BACK = "back"; // 返回
+	public final static String TYPE_ClICK = "click"; // 点击
+	public final static String TYPE_CLICK_MATCH_NODE = "clickMatchNode"; // 通过截屏匹配目标控件位置并点击
+	public final static String TYPE_CLICK_TARGET_NODE =  "clickTargetNode"; // 通过ui搜索并点击目标node的坐标
+	public final static String TYPE_CUSTOM = "custom"; // 自定义复杂操作
+	public final static String TYPE_DOUBLE_CLICK_TARGET_NODE =  "doubleClick"; // 双击
+	public final static String TYPE_KEYEVENT =  "keyevent"; // 按键
+	public final static String TYPE_LAST_PAGE =  "lastPage"; // 是否是最后一页
+	public final static String TYPE_OPEN = "open"; // 打开app
+	public final static String TYPE_SAVE_MATCH_NODE = "saveMatchNode"; // 通过截屏匹配目标控件位置并保存
+	public final static String TYPE_SAVE_TARGET_NODE = "saveTargetNode"; // 通过ui搜索并将目标node的坐标保存在数组中
+	public final static String TYPE_SET_IME = "setIme"; // 设置输入法
+	public final static String TYPE_SET_MSG_TO_INPUT = "setTextToInput"; // 在input中设置文本
+	public final static String TYPE_SWIPE = "swipe"; // 滑动
 	
-	public final static String TYPE_SEARCH_TARGET_NODE_SIMPLE = "simpleSearchTargetNode";
-	
+
 	// status
-	public final static String STATUS_INIT = "init"; //初始化，只执行一次
-	public final static String STATUS_RUNNING = "running"; //循环执行
-	public final static String StATUS_FINISHED = "finished"; //操作完成，只执行一次
-	public final static String STATUS_EXCEPTION = "exception"; //发生异常时执行一次做清理
+	public final static String STATUS_INIT = "init"; // 初始化，只执行一次
+	public final static String STATUS_RUNNING = "running"; // 循环执行
+	public final static String StATUS_FINISHED = "finished"; // 操作完成，只执行一次
+	public final static String STATUS_EXCEPTION = "exception"; // 发生异常时执行一次做清理
 	
 	// direction when type=swipe
 	public final static String DIRECTION_UP = "up"; 
@@ -26,7 +31,7 @@ public class StaticValue {
 	public final static String DIRECTION_LEFT = "left"; 
 	public final static String DIRECTION_RIGHT = "right"; 
 	
-	//提示消息
+	// 提示消息
 	public final static String MSG_COORD_EMPTY = "未找到目标node的坐标";
 	public final static String MSG_TEXT_EMPTY = "你在说什么啊？";
 	

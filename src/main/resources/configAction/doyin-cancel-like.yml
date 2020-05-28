@@ -30,7 +30,7 @@ doyin-cancel-like:
     - order: 4
       name: 获取点赞过的视频列表
       status: running
-      type: searchTargetNode
+      type: saveTargetNode
       ui-save-path: E:/adb/uidump.xml
       xpath: //node[@resource-id='com.ss.android.ugc.aweme:id/ai0']
       current-activity: ${config.doyin.activity.main-activity.name}

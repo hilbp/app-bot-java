@@ -46,7 +46,7 @@ soul-star-match:
     - order: 6
       name: 往文本框输入文字
       status: running
-      type: sendMessageToInput
+      type: setTextToInput
       current-activity: ${config.soul.activity.chat-window-activity.name}
       target-activity: ${config.soul.activity.chat-window-activity.name}
       
