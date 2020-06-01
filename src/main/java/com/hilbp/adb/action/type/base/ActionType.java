@@ -49,7 +49,7 @@ public abstract class ActionType implements Type {
 			return;
 		
 		int i = 0;
-		while(i < 15) {
+		while(i < 6) {
 			if(adbShellUtil.isTargetActivity(device, action.getTargetActivity()))
 				return;
 			try {

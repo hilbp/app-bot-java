@@ -35,4 +35,5 @@ public class StaticValue {
 	public final static String MSG_COORD_EMPTY = "未找到目标node的坐标";
 	public final static String MSG_TEXT_EMPTY = "你在说什么啊？";
 	
+	
 }

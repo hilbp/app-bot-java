@@ -9,9 +9,10 @@ import org.springframework.stereotype.Component;
 
 import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
-import com.hilbp.adb.entity.Coord;
 import com.hilbp.adb.entity.ActionResult;
+import com.hilbp.adb.entity.Coord;
 import com.hilbp.adb.state.ActionState;
+import com.hilbp.adb.task.RunningFlag;
 import com.hilbp.adb.util.StaticValue;
 import com.hilbp.adb.util.StringUtil;
 
@@ -29,7 +30,7 @@ public class ReflectActionSchedule implements ActionSchedule {
 	@Override
 	public void run(JadbDevice device, List<Action> actions) {
 		
-		while(true) {
+		while(RunningFlag.get()) {
 			try {
 				this.runInitAction(device, actions);
 				this.runRunningAction(device, actions);
@@ -63,7 +64,7 @@ public class ReflectActionSchedule implements ActionSchedule {
 		if(runningActions == null || runningActions.isEmpty()) 
 			return;
 		
-		while(true) {
+		while(RunningFlag.get()) {
 			for(Action action : runningActions) {
 				//执行父action
 				this.invoke(device, action);

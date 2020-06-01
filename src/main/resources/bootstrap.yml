@@ -1,6 +1,9 @@
 spring:
   application:
-    name: test
+    name: app-bot-java
+#  profiles: 
+#    active: dev
+    
 # debug: true
 
 #配置日志

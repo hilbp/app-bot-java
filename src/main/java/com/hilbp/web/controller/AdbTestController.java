@@ -37,9 +37,7 @@ public class AdbTestController {
 	@Autowired
 	TAipNlp tAipNlp;
 	
-	
-	
-	
+
 	@Autowired
 	@Qualifier("reflectActionSchedule")
 	ActionSchedule reflectActionSchedule;
