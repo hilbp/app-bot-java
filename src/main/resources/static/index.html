@@ -1,53 +1,153 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello WebSocket</title>
-    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/main.css" rel="stylesheet">
-    <script src="/webjars/jquery/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <title>app-bot-java</title>
+    <link rel="stylesheet" type="text/css" href="assert/styles/iview.css">
+    <link rel="stylesheet" type="text/css" href="assert/styles/main.css">
+    <script type="text/javascript" src="assert/vue.min.js"></script>
+    <script type="text/javascript" src="assert/iview.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="/app.js"></script>
+    <script type="text/javascript" src="assert/main.js"></script>
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="connect">WebSocket connection:</label>
-                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                    </button>
-                </div>
-            </form>
+<div id="app">
+    <div class="layout">
+        <Menu mode="horizontal" theme="dark" active-key="1">
+            <div class="layout-logo"></div>
+            <div class="layout-nav">
+                <Menu-item key="1">
+                    <Icon type="ios-navigate"></Icon>app-bot-java
+                </Menu-item>
+            </div>
+        </Menu>
+        <div class="layout-content" style="clear:both;">
+            <Row>
+                <i-col span="5">
+                    <Menu active-key="1-2" width="auto" :open-keys="['1']" @on-select="click">
+                        <Submenu key="1">
+                            <template slot="title">
+                                <Icon type="ios-navigate"></Icon>soul
+                            </template>
+                            <Menu-item key="soul-do-like">点赞</Menu-item>
+                            <Menu-item key="soul-comment">评论</Menu-item>
+                            <Menu-item key="soul-star-match">匹配</Menu-item>
+                            <Menu-item key="soul-auto-chat">聊天</Menu-item>
+                        </Submenu>
+                        <Submenu key="2">
+                            <template slot="title">
+                                <Icon type="ios-keypad"></Icon>抖音
+                            </template>
+                            <Menu-item key="doyin-comment-dolike">对评论点赞</Menu-item>
+                            <!-- <Menu-item key="2-2">选项 2</Menu-item> -->
+                        </Submenu>
+                        <!-- <Submenu key="3">
+                            <template slot="title">
+                                <Icon type="ios-analytics"></Icon>导航三
+                            </template>
+                            <Menu-item key="screen-mirror">投屏</Menu-item>
+                            <Menu-item key="3-2">选项 2</Menu-item>
+                        </Submenu> -->
+                    </Menu>
+                </i-col>
+                <i-col span="19">
+                    <div class="layout-content-main">
+                    	<div style="background:#eee;padding: 20px">
+				        <Card :bordered="false" style="height:450px;">
+				            <p slot="title">console</p>
+				            <div slot="extra">
+							    <!-- <i-button type="success" @click="start">start</i-button> -->
+							    <i-button type="warning" @click="stop">stop</i-button>
+					        </div>
+				            <div style="height: 100%; overflow-y: auto;" id="console">
+				            	<p>{{ msg }}</p>
+				            	<!-- <Row>
+							        <i-col span="15" id="console">
+							        	
+							        </i-col>
+							        <i-col span="5" offset="4" style="position: relative;right: 10px;top: 100px">
+							        	<img alt="" src="{{ screenSrc }}" style="width:100%">
+							        </i-col>
+							    </Row> -->
+				            </div>
+				        </Card>
+				    </div>
+                    </div>
+                </i-col>
+            </Row>
         </div>
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
-                </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Greetings</th>
-                </tr>
-                </thead>
-                <tbody id="greetings">
-                </tbody>
-            </table>
+        <div class="layout-copy">
+            2011-2016 &copy; TalkingData
         </div>
     </div>
 </div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            visible: false,
+            stompClient: null,
+            showStopBtn: true,
+            socket: null,
+            msg: "",
+            screenSrc: ""
+            
+        },
+        created: function() {
+        	this.connectSocket()
+        },
+        methods: {
+            show: function () {
+                this.visible = true
+            },
+            connectSocket: function() {
+            	let that = this
+            	that.socket = new SockJS('/app-bot')
+            	that.stompClient = Stomp.over(that.socket)
+            	that.socket.binaryType = "arraybuffer";
+            	that.stompClient.connect({}, function (frame) {
+                    that.msg = "已成功连接连接socket，欢迎使用！"
+                    //日志
+                    that.stompClient.subscribe('/topic/logger', function (greeting) {
+                        var temp = JSON.parse(greeting.body).body
+                      	//that.mstData.push(temp)
+                      	that.append(temp)
+                    })
+                    //投屏
+                    that.stompClient.subscribe('/topic/screen', function (res) {
+                    	that.screenSrc = 'data:image/png;base64,'+ JSON.parse(res.body)
+                    }) 
+
+                })
+            },
+            click: function(name) {
+            	this.showStopBtn = true
+            	this.sendMsg("/msg/start", name)
+            },
+            stop: function() {
+            	this.stompClient.send("/msg/stop", {}, JSON.stringify({'name': 'stop'}))
+            },
+            sendMsg: function sendMsg(path, message) {
+            	this.stompClient.send(path, {}, JSON.stringify({'name': message}))
+            },
+            disconnect: function() {
+                if (stompClient !== null) {
+                	this.stompClient.disconnect()
+                }
+                console.log("Disconnected");
+            },
+            append: function(content) {
+            	var p = document.createElement('p')
+                p.innerHTML = content
+                //p.style.color = 'green';
+				var console = document.getElementById('console')
+                console.appendChild(p)
+                console.scrollTop += 30
+            }
+        }
+    })
+  </script>
 </body>
+
 </html>

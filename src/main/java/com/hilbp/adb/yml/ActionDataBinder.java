@@ -31,7 +31,8 @@ import lombok.extern.slf4j.Slf4j;
 				"classpath:configAction/soul-auto-chat.yml",
 				"classpath:configAction/soul-comment.yml",
 				"classpath:configAction/soul-do-like.yml",
-				"classpath:configAction/soul-star-match.yml"
+				"classpath:configAction/soul-star-match.yml",
+				"classpath:configAction/screen-mirror.yml"
 		}, 
 		encoding = "utf-8")
 @Slf4j

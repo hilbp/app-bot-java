@@ -87,4 +87,14 @@ public class MatchTemplateUtil {
          opencv_core.minMaxLoc(m, minVal, maxVal, min, max, null);
          return new Coord(max.x(), max.y());
     }
+    
+    //图像压缩
+    public static void compress(String sourcePath, String targetPath) {
+    	Mat sourceColor = opencv_imgcodecs.imread(sourcePath);
+    	int[] params = new int[2];
+    	params[0] = opencv_imgcodecs.IMWRITE_PNG_COMPRESSION;
+    	params[1] = 9;
+    	
+    	opencv_imgcodecs.imwrite(targetPath, sourceColor, params);
+    }
 }

@@ -35,5 +35,9 @@ public class StaticValue {
 	public final static String MSG_COORD_EMPTY = "未找到目标node的坐标";
 	public final static String MSG_TEXT_EMPTY = "你在说什么啊？";
 	
+	//socket 订阅
+	public final static String SOCKET_PUSH_LOGGER = "/topic/logger"; //日志推送到前端
+	public final static String SOCKET_SCREEN_MIRROR = "/topic/screen"; //投屏
+	
 	
 }

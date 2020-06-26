@@ -1,5 +1,6 @@
 package com.hilbp.adb.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,6 +69,37 @@ public class AdbShellUtil {
 			e.printStackTrace();
 		}
 		
+	}
+	public void getScreenshot(JadbDevice device, String savePath, boolean bool) {
+    	try {
+    		String cmd = "adb exec-out screencap -p > " + savePath;
+        	String [] command = {"cmd" , "/C" , cmd};
+			Process process = Runtime.getRuntime().exec(command);
+			process.waitFor();
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	public byte[] getScreenshot(JadbDevice device) {
+    	try {
+    		String cmd = "adb exec-out screencap -p";
+			Process process = Runtime.getRuntime().exec(cmd);
+			InputStream inputStream = process.getInputStream();
+			
+			ByteArrayOutputStream swapStream = new ByteArrayOutputStream(); 
+			byte[] buff = new byte[2048];
+			int rc = 0; 
+
+			while ((rc = inputStream.read(buff, 0, 100)) > 0) { 
+				swapStream.write(buff, 0, rc); 
+			} 
+			byte[] bin = swapStream.toByteArray();
+			return bin;
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+    	return null;
 	}
 	
 	//获取当前显示的activity

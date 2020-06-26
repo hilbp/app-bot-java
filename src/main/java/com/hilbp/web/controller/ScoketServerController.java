@@ -30,6 +30,7 @@ public class ScoketServerController {
 	
 	@Autowired
 	ActionTaskSchedule actionTaskSchedule;
+	
 
 	/**
 	 * 初始化
@@ -60,5 +61,7 @@ public class ScoketServerController {
 	public void stopThread(SocketInput input) throws Exception {
 		actionTaskSchedule.stop();
 	}
+	
+	
 
 }
