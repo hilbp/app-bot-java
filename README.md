@@ -6,7 +6,7 @@ app-bot-java
 
 之前用Python实现过一版，但由于对Python不熟，后期代码扩展时很棘手。由于一直用java做开发，所以抱着学习的心态，用java做了重构，考虑了一些设计模式，相对之前用Python实现的，好了很多。java面向对象设计的思想再结合设计模式，对应用后期的迭代、扩展都是很好的。
 
-![](C:\Users\hilbp\Desktop\各类文件\3.png)
+![主界面](/src/main/resources/static/assert/img/3.png)
 
 ### 功能
 
