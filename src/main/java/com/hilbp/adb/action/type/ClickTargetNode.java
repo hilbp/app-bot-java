@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
-import com.hilbp.adb.entity.Coord;
 import com.hilbp.adb.entity.ActionResult;
+import com.hilbp.adb.entity.Coord;
 import com.hilbp.adb.util.UiAutoMatorUtil;
 
 import se.vidstige.jadb.JadbDevice;
@@ -28,15 +28,15 @@ public class ClickTargetNode extends ActionType {
 		
 		//获取ui文件
 		if(action.getIsNotGetNewUi() == null || !action.getIsNotGetNewUi()) {
-			this.beforExecuteShell(device, action);
+			typeExecuteUtil.beforExecuteShell(device, action);
 			adbShellUtil.saveUiFile(device, action.getUiSavePath());
-			this.afterExecuteShell(device, action);
+			typeExecuteUtil.afterExecuteShell(device, action);
 		}
 		
 		//通过xpath搜索坐标位置集合
 		List<Coord> coords = UiAutoMatorUtil.getTargetCoord(action);
 		//进行点击操作
-		this.click(device, action, coords);
+		typeExecuteUtil.click(device, action, coords);
 	}
 	
 	

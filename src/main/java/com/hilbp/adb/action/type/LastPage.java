@@ -2,13 +2,14 @@ package com.hilbp.adb.action.type;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
-import com.hilbp.adb.entity.Node;
 import com.hilbp.adb.entity.ActionResult;
-import com.hilbp.adb.state.ActionState;
+import com.hilbp.adb.entity.Node;
+import com.hilbp.adb.state.SaveActionState;
 import com.hilbp.adb.util.UiAutoMatorUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,10 @@ import se.vidstige.jadb.JadbDevice;
 @Component
 @Slf4j
 public class LastPage extends ActionType {
+	
+	
+	@Autowired
+	private SaveActionState saveActionState;
 	
 	@Override
 	public void operate(JadbDevice device, Action action) {}
@@ -32,14 +37,15 @@ public class LastPage extends ActionType {
 		
 		//获取ui文件
 		if(action.getIsNotGetNewUi() == null || !action.getIsNotGetNewUi()) {
-			this.beforExecuteShell(device, action);
+			typeExecuteUtil.beforExecuteShell(device, action);
 			adbShellUtil.saveUiFile(device, action.getUiSavePath());
-			this.afterExecuteShell(device, action);
+			typeExecuteUtil.afterExecuteShell(device, action);
 		}
 		
 		String actionStateName = action.getActionStateName();
-		ActionState actionState = (ActionState) applicationContext.getBean(actionStateName);
-		List<Node> nodes = actionState.getNodes();
+		@SuppressWarnings("unchecked")
+		List<Node> nodes = (List<Node>) saveActionState.getStateData(actionStateName);
+		
 		if(nodes != null) {
 			List<Node> news = UiAutoMatorUtil.getTargetNode(action);
 			if(news.size() == nodes.size()) {
@@ -48,7 +54,7 @@ public class LastPage extends ActionType {
 					Node node2 = news.get(news.size() -1);
 					if(node1.getText().equals(node2.getText()))
 						log.info("→   结论：是最后一页");
-						actionState.clear();
+						saveActionState.clearState(actionStateName);	
 						return true;
 				}else {
 					return true;
@@ -58,7 +64,7 @@ public class LastPage extends ActionType {
 		
 		//保存状态
 		log.info("→   结论：不是最后一页");
-		this.saveActionState(action);
+		saveActionState.saveState(action, null, null);
 		return false;
 	}
 

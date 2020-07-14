@@ -80,6 +80,16 @@ public class UiAutoMatorUtil {
 		return coords;
 	}
 	
+	//通过node获取坐标
+	public static List<Coord> getCoordListFromNodes(List<Node> nodes) {
+		List<Coord> coords = new ArrayList<Coord>();
+		for(Node node : nodes) {
+			Coord coord = boundsToCoord(node.getBounds());
+			coords.add(coord);
+		}
+		return coords;
+	}
+		
 	//通过布局文件中的bounds属性获取坐标值
 	public static Coord boundsToCoord(String bounds) {
 		

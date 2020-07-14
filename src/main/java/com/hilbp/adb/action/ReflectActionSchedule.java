@@ -11,10 +11,12 @@ import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
 import com.hilbp.adb.entity.ActionResult;
 import com.hilbp.adb.entity.Coord;
-import com.hilbp.adb.state.ActionState;
+import com.hilbp.adb.entity.Node;
+import com.hilbp.adb.state.SaveActionState;
 import com.hilbp.adb.task.RunningFlag;
 import com.hilbp.adb.util.StaticValue;
 import com.hilbp.adb.util.StringUtil;
+import com.hilbp.adb.util.UiAutoMatorUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import se.vidstige.jadb.JadbDevice;
@@ -24,7 +26,10 @@ import se.vidstige.jadb.JadbDevice;
 public class ReflectActionSchedule implements ActionSchedule {
 	
 	@Autowired
-	private ApplicationContext applicationContext;	
+	private ApplicationContext applicationContext;
+	
+	@Autowired
+	private SaveActionState saveActionState;
 
 	@SuppressWarnings("finally")
 	@Override
@@ -118,9 +123,8 @@ public class ReflectActionSchedule implements ActionSchedule {
 		
 		String actionStateName = action.getActionStateName();
 		if(StringUtil.isEmpty(actionStateName)) return;
-		ActionState actionState = (ActionState) applicationContext.getBean(actionStateName);
-		
-		List<Coord> coords = actionState.getCoordListFromNodes();
+		List<Node> nodes = saveActionState.getStateData(actionStateName);
+		List<Coord> coords = UiAutoMatorUtil.getCoordListFromNodes(nodes);
 		for(Coord coord : coords) {
 			for(Action childAction : childActions) {
 				childAction.setParentTochildLocation(coord);

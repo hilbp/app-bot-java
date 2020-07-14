@@ -36,14 +36,14 @@ public class ClickMatchNode extends ActionType {
 		
 		String sourcePath = action.getSourcePath();
 		//先截屏
-		this.beforExecuteShell(device, action);
+		typeExecuteUtil.beforExecuteShell(device, action);
 		adbShellUtil.getScreenshot(device, sourcePath);
-		this.afterExecuteShell(device, action);
+		typeExecuteUtil.afterExecuteShell(device, action);
 		
 		//匹配及点击
 		String templatePath = action.getTemplatePath();
 		List<Coord> coords = MatchTemplateUtil.match(sourcePath, templatePath);
-		this.click(device, action, coords);
+		typeExecuteUtil.click(device, action, coords);
 	}
 
 }

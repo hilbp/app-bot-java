@@ -19,7 +19,7 @@ public class Back extends ActionType {
 	
 	public void run(JadbDevice device, Action action) {
 		
-		this.beforExecuteShell(device, action);
+		typeExecuteUtil.beforExecuteShell(device, action);
 		int i = 0;
 		while(i < 5) {
 			adbShellUtil.back(device);

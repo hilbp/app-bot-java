@@ -20,7 +20,7 @@ public class Open extends ActionType {
 	
 		if(!adbShellUtil.isTargetActivity(device, action.getTargetActivity())) {
 			adbShellUtil.openActivity(device, action.getTargetActivity());
-			this.afterExecuteShell(device, action);
+			typeExecuteUtil.afterExecuteShell(device, action);
 		}
 	}
 

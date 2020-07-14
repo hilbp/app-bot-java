@@ -18,9 +18,9 @@ public class Keyevent extends ActionType {
 	
 	public void run(JadbDevice device, Action action) {
 		
-		this.beforExecuteShell(device, action);
+		typeExecuteUtil.beforExecuteShell(device, action);
 //		adbShellUtil.exeShell(device, shell)
-		this.afterExecuteShell(device, action);
+		typeExecuteUtil.afterExecuteShell(device, action);
 			
 	}
 

@@ -39,5 +39,11 @@ public class StaticValue {
 	public final static String SOCKET_PUSH_LOGGER = "/topic/logger"; //日志推送到前端
 	public final static String SOCKET_SCREEN_MIRROR = "/topic/screen"; //投屏
 	
+	//AbstractActionState的type值
+	public static final String FIELD_TYPE_NODES = "nodes";
+	public static final String FIELD_TYPE_COORDS = "coords";
+	public static final String FIELD_TYPE_COORD = "coord";
+	public static final String FIELD_TYPE_TEXT = "text";
+	
 	
 }

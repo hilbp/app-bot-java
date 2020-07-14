@@ -29,7 +29,8 @@ public class GlobalConfig {
 	@Bean
 	public JadbConnection getJadbConnection( ) {
 		
-		return new JadbConnection("localhost", 5037);
+//		return new JadbConnection("localhost", 5037);
+		return new JadbConnection();
 	}
 	
 //	@Bean

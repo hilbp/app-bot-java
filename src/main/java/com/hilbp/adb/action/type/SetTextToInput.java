@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 
 import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
-import com.hilbp.adb.entity.Node;
 import com.hilbp.adb.entity.ActionResult;
-import com.hilbp.adb.state.ActionState;
+import com.hilbp.adb.entity.Node;
+import com.hilbp.adb.state.SaveActionState;
 import com.hilbp.adb.util.NlpUtil;
 import com.hilbp.adb.util.StringUtil;
 
@@ -33,6 +33,9 @@ public class SetTextToInput extends ActionType {
 	ApplicationContext applicationContext;
 	
 	@Autowired
+	private SaveActionState saveActionState;
+	
+	@Autowired
 	private NlpUtil nlpUtil;
 	
 	@Override
@@ -42,7 +45,7 @@ public class SetTextToInput extends ActionType {
 	
 	public void run(JadbDevice device, Action action) {
 				
-		this.beforExecuteShell(device, action);
+		typeExecuteUtil.beforExecuteShell(device, action);
 		String actionStateName = action.getActionStateName();
 		
 		String msg = null;
@@ -53,16 +56,14 @@ public class SetTextToInput extends ActionType {
 		}
 		adbShellUtil.sendMessage(device, msg, true);
 		
-		this.afterExecuteShell(device, action);
+		typeExecuteUtil.afterExecuteShell(device, action);
 			
 	}
 	
 	//语义识别
 	public String getChatMsg(String actionStateName) {
 		
-		ActionState actionState = (ActionState) applicationContext.getBean(actionStateName);
-		
-		List<Node> nodes = actionState.getNodes();
+		List<Node> nodes = saveActionState.getStateData(actionStateName);
 		if(nodes.size() == 0) {
 			return "你在嘤嘤嘤什么呀！";
 		}

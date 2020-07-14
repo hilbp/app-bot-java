@@ -21,7 +21,7 @@ import se.vidstige.jadb.RemoteFile;
 
 @Component
 @Slf4j
-public class AdbShellUtil {
+public final class AdbShellUtil {
 		
 	@Autowired
 	private JadbConnection jadb;

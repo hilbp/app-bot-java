@@ -19,9 +19,9 @@ public class SetIme extends ActionType {
 	
 	public void run(JadbDevice device, Action action) {
 				
-		this.beforExecuteShell(device, action);
+		typeExecuteUtil.beforExecuteShell(device, action);
 		adbShellUtil.setIme(device, action.getImeName());
-		this.afterExecuteShell(device, action);
+		typeExecuteUtil.afterExecuteShell(device, action);
 			
 	}
 

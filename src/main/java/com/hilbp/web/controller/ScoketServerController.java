@@ -55,6 +55,14 @@ public class ScoketServerController {
 	}
 	
 	/**
+	 * 手动操作屏幕：接收文本输入和点击坐标
+	 */
+	@MessageMapping("/manual")
+	public void manual(SocketInput input) {
+		
+	}
+	
+	/**
 	 * 停止线程
 	 */
 	@MessageMapping("/stop")

@@ -9,4 +9,4 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class LastPageActionState extends ActionState {}
+public class LastPageActionState extends AbstractActionState<Object> {}

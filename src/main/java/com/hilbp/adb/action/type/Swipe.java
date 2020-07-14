@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 
 import com.hilbp.adb.action.type.base.ActionType;
 import com.hilbp.adb.entity.Action;
-import com.hilbp.adb.entity.Coord;
 import com.hilbp.adb.entity.ActionResult;
+import com.hilbp.adb.entity.Coord;
 import com.hilbp.adb.util.StaticValue;
 import com.hilbp.adb.util.UiAutoMatorUtil;
 
@@ -58,9 +58,9 @@ public class Swipe extends ActionType {
 		end.setX(x2);
 		end.setY(y2);
 		
-		this.beforExecuteShell(device, action);
+		typeExecuteUtil.beforExecuteShell(device, action);
 		adbShellUtil.swipe(device, start, end, 100);
-		this.afterExecuteShell(device, action);
+		typeExecuteUtil.afterExecuteShell(device, action);
 	}
 
 	@Override
