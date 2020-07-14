@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no" />
+    <title>app-bot-java</title>
+    <style>
+    	#screen_container {
+	    	border: solid red 1px;
+		    width: 216px;
+		    height: 432px;
+		    position: relative;
+    	}
+    	.img {
+    		width: 100%;
+    		height: auto;
+    	}
+    	.myCanvas {
+    		background-color: #000000;
+    		position: absolute;
+		    left: 0px;
+		    opacity: 0.1;
+		    cursor: pointer;
+    	}
+    	
+    </style>
+</head>
+<body>
+<div>
+	<button onclick="setScreenSize(4)">大小设置</button>
+</div>
+<div id="screen_container">
+	<img alt="" src="./assert/doyincommentlist.png" class="img"> 
+	<canvas id="canvas"></canvas>
+</div>
+</body>
+<script>
+
+var defaultRatio = 5
+var screenWidth = 1080
+var screenHeight = 2160
+var screen = document.getElementById('screen_container')
+var canvas = document.getElementById('canvas')
+
+function setScreenSize(ratio) {
+	if(defaultRatio == 5) defaultRatio = 4
+	else defaultRatio = 5
+
+	var width = screenWidth / defaultRatio
+	var height = screenHeight / defaultRatio
+	
+	screen.style.width = width + 'px'
+	screen.style.height = height + 'px'
+	
+	//defaultRatio = ratio
+	setCanvasSize()
+}
+
+function setCanvasSize() {
+    
+	canvas.width = screen.clientWidth
+    canvas.height = screen.clientHeight
+    canvas.classList.add('myCanvas')
+}
+
+window.onload = function(){
+	setCanvasSize()
+	
+	var ctx = canvas.getContext('2d')
+	canvas.addEventListener("mousemove", function(e){
+        var sw = (canvas.style.width.replace(/\px/g, ""))| 0,
+            sh = (canvas.style.height.replace(/\px/g, ""))|0;
+
+        if(e.pageX || e.pageY) {
+            x = e.pageX;
+            y = e.pageY;
+        }else{
+            x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+        }
+
+        x -= canvas.offsetLeft;
+        y -= canvas.offsetTop;
+
+        if(sw) x *= canvas.width / sw;
+        if(sh) y *= canvas.height / sh;
+        x |= 0;
+        y |= 0;
+		
+        console.log("x: " + x * defaultRatio + ", y: " + y * defaultRatio + ", ratio: " + defaultRatio)
+    }, false);
+
+	
+}
+	
+</script>
+</html>
