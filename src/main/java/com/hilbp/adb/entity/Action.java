@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class Action {
 	
-	private int order;
-	private String name; 
-	private String status;
-	private String type;
+	private int order; //序号
+	private String name; //名称
+	private String status; //执行状态
+	private String type; //操作类型
 	private String currentActivity; //当前activity
 	private String targetActivity; //目标activity
 	

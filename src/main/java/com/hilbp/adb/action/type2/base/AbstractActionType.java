@@ -22,7 +22,7 @@ public abstract class AbstractActionType implements IType {
 	
 	public abstract void setAction(Action action);
 	public abstract void operate(JadbDevice device);
-	public abstract void operate(JadbDevice device, ActionResult resutl);
+	public abstract void operate(JadbDevice device, ActionResult result);
 	
 	
 	

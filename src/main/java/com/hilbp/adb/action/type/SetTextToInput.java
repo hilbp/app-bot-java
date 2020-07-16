@@ -28,10 +28,7 @@ import se.vidstige.jadb.JadbDevice;
 @Component
 @Slf4j
 public class SetTextToInput extends ActionType {
-	
-	@Autowired
-	ApplicationContext applicationContext;
-	
+
 	@Autowired
 	private SaveActionState saveActionState;
 	

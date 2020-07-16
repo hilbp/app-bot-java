@@ -11,6 +11,7 @@ public class StaticValue {
 	public final static String TYPE_DOUBLE_CLICK_TARGET_NODE =  "doubleClick"; // 双击
 	public final static String TYPE_KEYEVENT =  "keyevent"; // 按键
 	public final static String TYPE_LAST_PAGE =  "lastPage"; // 是否是最后一页
+	public final static String TYPE_MANUAL_CONTROL = "manualControl"; //pc操控手机
 	public final static String TYPE_OPEN = "open"; // 打开app
 	public final static String TYPE_SAVE_MATCH_NODE = "saveMatchNode"; // 通过截屏匹配目标控件位置并保存
 	public final static String TYPE_SAVE_TARGET_NODE = "saveTargetNode"; // 通过ui搜索并将目标node的坐标保存在数组中
@@ -39,11 +40,9 @@ public class StaticValue {
 	public final static String SOCKET_PUSH_LOGGER = "/topic/logger"; //日志推送到前端
 	public final static String SOCKET_SCREEN_MIRROR = "/topic/screen"; //投屏
 	
-	//AbstractActionState的type值
-	public static final String FIELD_TYPE_NODES = "nodes";
-	public static final String FIELD_TYPE_COORDS = "coords";
-	public static final String FIELD_TYPE_COORD = "coord";
-	public static final String FIELD_TYPE_TEXT = "text";
+	//pc操作手机时的操作类型
+	public final static String MANUAL_TYPE_CLIKE = "click"; //点击屏幕
+	public final static String MANUAL_TYPE_INPUT = "input"; //输入文字
 	
 	
 }
